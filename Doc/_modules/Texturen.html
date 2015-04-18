@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Texturen &mdash; Sonnensystem 1.0 Dokumentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="top" title="Sonnensystem 1.0 Dokumentation" href="../index.html" />
+    <link rel="up" title="Modul-Quellcode" href="index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Stichwortverzeichnis"
+             accesskey="I">Index</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Sonnensystem 1.0 Dokumentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Modul-Quellcode</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Quellcode für Texturen</h1><div class="highlight"><pre>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;janet&#39;</span>
+
+<span class="kn">from</span> <span class="nn">OpenGL.GL</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">OpenGL.GLUT</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">OpenGL.GLU</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">PIL.Image</span> <span class="kn">import</span> <span class="o">*</span>      <span class="c"># fuer texturen</span>
+
+<div class="viewcode-block" id="Texturen"><a class="viewcode-back" href="../Texturen.html#Texturen.Texturen">[Doku]</a><span class="k">class</span> <span class="nc">Texturen</span><span class="p">():</span>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="Texturen.loadTextures"><a class="viewcode-back" href="../Texturen.html#Texturen.Texturen.loadTextures">[Doku]</a>    <span class="k">def</span> <span class="nf">loadTextures</span><span class="p">(</span><span class="n">bild</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Textur wird geladen</span>
+<span class="sd">        :param bild: Pfad zu Bild</span>
+<span class="sd">        :return: Textur</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">bild</span><span class="p">)</span>
+
+        <span class="c"># Textur</span>
+        <span class="n">ix</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">iy</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="s">&quot;raw&quot;</span><span class="p">,</span> <span class="s">&quot;RGBX&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c"># Textur erstellen</span>
+        <span class="n">textur</span> <span class="o">=</span> <span class="n">glGenTextures</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c"># BlindTexture</span>
+        <span class="n">glBindTexture</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span> <span class="n">textur</span><span class="p">)</span>
+        <span class="n">glTexParameteri</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span> <span class="n">GL_TEXTURE_MAG_FILTER</span><span class="p">,</span> <span class="n">GL_LINEAR</span><span class="p">)</span>
+        <span class="n">glTexParameteri</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span> <span class="n">GL_TEXTURE_MIN_FILTER</span><span class="p">,</span> <span class="n">GL_LINEAR_MIPMAP_NEAREST</span><span class="p">)</span>
+        <span class="n">gluBuild2DMipmaps</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">ix</span><span class="p">,</span> <span class="n">iy</span><span class="p">,</span> <span class="n">GL_RGBA</span><span class="p">,</span> <span class="n">GL_UNSIGNED_BYTE</span><span class="p">,</span> <span class="n">image</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">textur</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Schnellsuche</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Los" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Geben Sie Suchbegriffe oder einen Modul-, Klassen- oder Funktionsnamen ein.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, janet.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.2</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Fixstern &mdash; Sonnensystem 1.0 Dokumentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="top" title="Sonnensystem 1.0 Dokumentation" href="../index.html" />
+    <link rel="up" title="Modul-Quellcode" href="index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Stichwortverzeichnis"
+             accesskey="I">Index</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Sonnensystem 1.0 Dokumentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Modul-Quellcode</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Quellcode für Fixstern</h1><div class="highlight"><pre>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;janet&#39;</span>
+
+<span class="kn">from</span> <span class="nn">OpenGL.GL</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">OpenGL.GLU</span> <span class="kn">import</span> <span class="o">*</span>
+
+<div class="viewcode-block" id="Fixstern"><a class="viewcode-back" href="../Fixstern.html#Fixstern.Fixstern">[Doku]</a><span class="k">class</span> <span class="nc">Fixstern</span><span class="p">():</span>
+
+<div class="viewcode-block" id="Fixstern.DrawGLScene_P"><a class="viewcode-back" href="../Fixstern.html#Fixstern.Fixstern.DrawGLScene_P">[Doku]</a>    <span class="k">def</span> <span class="nf">DrawGLScene_P</span><span class="p">(</span><span class="n">radius</span><span class="p">,</span> <span class="n">rot</span><span class="p">,</span> <span class="n">textur</span><span class="p">,</span> <span class="n">light</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Erstellen der Sonne/Fixstern</span>
+<span class="sd">        :param radius: Radius des Fixsterns</span>
+<span class="sd">        :param rot: Variable fuer die Rotation</span>
+<span class="sd">        :param textur: Textur fuer den FIxstern</span>
+<span class="sd">        :param light: Varibale fuers Licht</span>
+<span class="sd">        :param x: Koordinaten x</span>
+<span class="sd">        :param y: Koordinaten y</span>
+<span class="sd">        :param z: Koordinaten z</span>
+<span class="sd">        :return: Fixstern</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">glLoadIdentity</span><span class="p">()</span>                            <span class="c"># Screen neu laden</span>
+        <span class="n">glTranslatef</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>                       <span class="c"># Positionieren am Screen (x,y,z)</span>
+        <span class="n">glRotatef</span><span class="p">(</span><span class="n">rot</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>            <span class="c"># Rotatation um Y-Achse</span>
+
+        <span class="n">glBindTexture</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span> <span class="n">textur</span><span class="p">)</span>        <span class="c"># 2d Textur (x und y groesse)</span>
+        <span class="n">quadratic</span> <span class="o">=</span> <span class="n">gluNewQuadric</span><span class="p">()</span>
+        <span class="n">gluQuadricNormals</span><span class="p">(</span><span class="n">quadratic</span><span class="p">,</span> <span class="n">GLU_SMOOTH</span><span class="p">)</span>    <span class="c"># Erstellen von Smooth Normals</span>
+        <span class="n">gluQuadricTexture</span><span class="p">(</span><span class="n">quadratic</span><span class="p">,</span> <span class="n">GL_TRUE</span><span class="p">)</span>       <span class="c"># Erstellen von Texture Coords</span>
+
+        <span class="c"># Planet erstellen</span>
+        <span class="n">gluSphere</span><span class="p">(</span><span class="n">quadratic</span><span class="p">,</span> <span class="n">radius</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>  <span class="c"># Parameter: Radius; Longitude; Latitude Segments</span>
+</div>
+<div class="viewcode-block" id="Fixstern.rotation"><a class="viewcode-back" href="../Fixstern.html#Fixstern.Fixstern.rotation">[Doku]</a>    <span class="k">def</span> <span class="nf">rotation</span><span class="p">(</span><span class="n">rot</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Rotation  der Sonne um sich selbst</span>
+<span class="sd">        :param rot: Variable fuer Rotation</span>
+<span class="sd">        :param x: Koordinaten x</span>
+<span class="sd">        :param y: Koordinaten y</span>
+<span class="sd">        :param z: Koordinaten z</span>
+<span class="sd">        :return: Rotation</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">rot</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">rot</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">y</span>  <span class="c"># Y achse</span>
+        <span class="k">return</span> <span class="n">rot</span>              <span class="c"># Rotation</span>
+</pre></div></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Schnellsuche</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Los" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Geben Sie Suchbegriffe oder einen Modul-, Klassen- oder Funktionsnamen ein.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, janet.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.2</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

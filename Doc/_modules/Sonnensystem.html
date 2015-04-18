@@ -1,0 +1,394 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Sonnensystem &mdash; Sonnensystem 1.0 Dokumentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="top" title="Sonnensystem 1.0 Dokumentation" href="../index.html" />
+    <link rel="up" title="Modul-Quellcode" href="index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Stichwortverzeichnis"
+             accesskey="I">Index</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Sonnensystem 1.0 Dokumentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Modul-Quellcode</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Quellcode für Sonnensystem</h1><div class="highlight"><pre>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__build__&#39;</span><span class="p">:</span>
+   <span class="k">raise</span> <span class="ne">Exception</span>
+
+<span class="kn">from</span> <span class="nn">Sonnensystem_3.Planeten</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">Sonnensystem_3.Texturen</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">Sonnensystem_3.Licht</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">Sonnensystem_3.Splashscreen</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">Sonnensystem_3.Fixstern</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">Sonnensystem_3.Mond</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="o">*</span>
+
+<div class="viewcode-block" id="Screen"><a class="viewcode-back" href="../Sonnensystem.html#Sonnensystem.Screen">[Doku]</a><span class="k">class</span> <span class="nc">Screen</span><span class="p">():</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Konstruktor: initialisieren der Werte</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">rot_pl1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>        <span class="c"># sonne</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rot_pl2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>        <span class="c"># Erde</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rot_pl3</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>        <span class="c"># Mars</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rot_pl4</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>        <span class="c"># Mond</span>
+
+        <span class="c"># Werte zuweisen</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">texture_num</span> <span class="o">=</span> <span class="mi">2</span>            <span class="c"># fuer textur</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">object</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">light</span> <span class="o">=</span> <span class="mi">0</span>                  <span class="c"># fuer licht</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="mi">50</span>                     <span class="c"># fuer zoomen</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dreh</span> <span class="o">=</span> <span class="mi">1</span>                   <span class="c"># fuer drehung + stoppen</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">=</span> <span class="bp">True</span>                   <span class="c"># variable fuer Tasterturklick</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">c</span> <span class="o">=</span> <span class="bp">True</span>                   <span class="c"># variable fuer Kamera</span>
+        <span class="bp">self</span><span class="o">.</span> <span class="n">h</span> <span class="o">=</span> <span class="bp">True</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="mi">1000</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="mi">600</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">intZaehler</span> <span class="o">=</span> <span class="mi">0</span>
+
+<div class="viewcode-block" id="Screen.Menu"><a class="viewcode-back" href="../Sonnensystem.html#Sonnensystem.Screen.Menu">[Doku]</a>    <span class="k">def</span> <span class="nf">Menu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Um das Menue anzeigen zu lassen (Steuerung etc)</span>
+<span class="sd">        :return: Menu mit Tkinter anzeigen</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">root</span> <span class="o">=</span> <span class="n">Tk</span><span class="p">()</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">Text</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+        <span class="n">text</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">INSERT</span><span class="p">,</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&gt;&gt;HILFEFENSTER:</span><span class="se">\n</span><span class="s">&quot;</span>
+                            <span class="s">&quot;------------------------------------------------------------</span><span class="se">\n</span><span class="s">&quot;</span>
+                            <span class="s">&quot;|     Um fortzufahren, schliessen Sie dieses Fenster       |</span><span class="se">\n</span><span class="s">&quot;</span>
+                            <span class="s">&quot;|  Sie können die Hilfe mit der Taste &#39;H&#39; wieder aufrufen  |</span><span class="se">\n</span><span class="s">&quot;</span>
+                            <span class="s">&quot;------------------------------------------------------------</span><span class="se">\n\n</span><span class="s">&quot;</span>
+                            <span class="s">&quot;&gt;&gt; TASTATUR:</span><span class="se">\n</span><span class="s">&quot;</span>
+                            <span class="s">&quot;&#39;L&#39; - Licht ein/aus</span><span class="se">\n</span><span class="s">&quot;</span>
+                            <span class="s">&quot;&#39;T&#39; - Textur ein/aus</span><span class="se">\n</span><span class="s">&quot;</span>
+                            <span class="s">&quot;&#39;A&#39; / &#39;S&#39; - zum Steuern</span><span class="se">\n</span><span class="s">&quot;</span>
+                            <span class="s">&quot;&#39;C&#39; - Kameraansicht ändern</span><span class="se">\n</span><span class="s">&quot;</span>
+                            <span class="s">&quot;&#39;P&#39; - Stoppen der Animation</span><span class="se">\n</span><span class="s">&quot;</span>
+                            <span class="s">&quot;&#39;Z&#39; - Einzoomen</span><span class="se">\n</span><span class="s">&quot;</span>
+                            <span class="s">&quot;&#39;U&#39; - Auszoomen</span><span class="se">\n</span><span class="s">&quot;</span>
+                            <span class="s">&quot;&#39;H&#39; - Hilfe</span><span class="se">\n\n</span><span class="s">&quot;</span>
+                            <span class="s">&quot;&gt;&gt; MAUS:</span><span class="se">\n</span><span class="s">&quot;</span>
+                            <span class="s">&quot;Linke Maustaste - Licht ein/aus</span><span class="se">\n</span><span class="s">&quot;</span>
+                            <span class="s">&quot;Rechte Maustaste - Textur ein/aus&quot;</span><span class="p">)</span>
+        <span class="n">text</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+        <span class="n">root</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="Screen.InitGL"><a class="viewcode-back" href="../Sonnensystem.html#Sonnensystem.Screen.InitGL">[Doku]</a>    <span class="k">def</span> <span class="nf">InitGL</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Width</span><span class="p">,</span> <span class="n">Height</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Funktion setzt initial Parameter</span>
+<span class="sd">        :param Width: Breite</span>
+<span class="sd">        :param Height: Hoehe</span>
+<span class="sd">        :return: Fenstergroesse</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c"># Texturen laden</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">quadratic_1</span> <span class="o">=</span> <span class="n">Texturen</span><span class="o">.</span><span class="n">loadTextures</span><span class="p">(</span><span class="s">&quot;./Bilder/sonne.jpg&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">quadratic_2</span> <span class="o">=</span> <span class="n">Texturen</span><span class="o">.</span><span class="n">loadTextures</span><span class="p">(</span><span class="s">&quot;./Bilder/erde.jpg&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">quadratic_3</span> <span class="o">=</span> <span class="n">Texturen</span><span class="o">.</span><span class="n">loadTextures</span><span class="p">(</span><span class="s">&quot;./Bilder/mars.jpg&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">quadratic_4</span> <span class="o">=</span> <span class="n">Texturen</span><span class="o">.</span><span class="n">loadTextures</span><span class="p">(</span><span class="s">&quot;./Bilder/mond.jpg&quot;</span><span class="p">)</span>
+
+        <span class="n">glEnable</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">)</span>             <span class="c"># Texturen anzeigen</span>
+        <span class="n">glClearColor</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>    <span class="c"># Hintergrundfarbe schwarz</span>
+        <span class="n">glClearDepth</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>                   <span class="c"># Loeschen des Depth Buffers</span>
+        <span class="n">glDepthFunc</span><span class="p">(</span><span class="n">GL_LESS</span><span class="p">)</span>                <span class="c"># The Type Of Depth Test To Do</span>
+        <span class="n">glEnable</span><span class="p">(</span><span class="n">GL_DEPTH_TEST</span><span class="p">)</span>             <span class="c"># Enables Depth Testing</span>
+        <span class="n">glShadeModel</span><span class="p">(</span><span class="n">GL_SMOOTH</span><span class="p">)</span>             <span class="c"># Enables Smooth Color Shading</span>
+
+        <span class="n">glMatrixMode</span><span class="p">(</span><span class="n">GL_PROJECTION</span><span class="p">)</span>         <span class="c"># Reset The Projection Matrix</span>
+        <span class="n">glLoadIdentity</span><span class="p">()</span>
+
+        <span class="n">Licht</span><span class="o">.</span><span class="n">setupLighting</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>           <span class="c"># Licht setzen</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">Menu</span><span class="p">()</span>                         <span class="c"># Menue aufrufen</span>
+
+        <span class="n">glMatrixMode</span><span class="p">(</span><span class="n">GL_MODELVIEW</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Screen.ReSizeGLScene"><a class="viewcode-back" href="../Sonnensystem.html#Sonnensystem.Screen.ReSizeGLScene">[Doku]</a>    <span class="k">def</span> <span class="nf">ReSizeGLScene</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Width</span><span class="p">,</span> <span class="n">Height</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Wenn die Groesse vom Fenster geaendert wird, sollen proportional bleiben</span>
+<span class="sd">        :param Width: Breite</span>
+<span class="sd">        :param Height: Hoehe</span>
+<span class="sd">        :return: Seitenverhaeltnisse</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c"># Das Fenster darf nicht zu klein sein</span>
+        <span class="k">if</span> <span class="n">Height</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">Height</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">Width</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">Height</span>
+
+        <span class="c"># setzen des Viewports</span>
+        <span class="n">glViewport</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">Width</span><span class="p">,</span> <span class="n">Height</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Screen.DrawGLScene"><a class="viewcode-back" href="../Sonnensystem.html#Sonnensystem.Screen.DrawGLScene">[Doku]</a>    <span class="k">def</span> <span class="nf">DrawGLScene</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Funktion zum Erstellen der Planeten</span>
+<span class="sd">        :return: Planeten</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c">#Perspektive</span>
+        <span class="n">glMatrixMode</span><span class="p">(</span><span class="n">GL_PROJECTION</span><span class="p">)</span>
+        <span class="n">glLoadIdentity</span><span class="p">()</span>
+        <span class="n">gluPerspective</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">z</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="p">),</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">100.0</span><span class="p">)</span>      <span class="c"># Perspektive erstellen</span>
+
+        <span class="c"># Kamera Perspektive</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">c</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
+            <span class="n">gluLookAt</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>      <span class="c"># Normalansicht (Seitlich)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">c</span> <span class="ow">is</span> <span class="bp">False</span><span class="p">:</span>
+            <span class="n">gluLookAt</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="mi">19</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>  <span class="c"># Ansicht von Oben</span>
+
+        <span class="n">glMatrixMode</span><span class="p">(</span><span class="n">GL_MODELVIEW</span><span class="p">)</span>
+
+        <span class="n">glClear</span><span class="p">(</span><span class="n">GL_COLOR_BUFFER_BIT</span> <span class="o">|</span> <span class="n">GL_DEPTH_BUFFER_BIT</span><span class="p">)</span>  <span class="c"># buffer loeschen</span>
+        <span class="n">glLoadIdentity</span><span class="p">()</span>                                    <span class="c"># Screen neu laden</span>
+
+        <span class="c"># Sonne aus Klasse Fixstern</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rot_pl1</span> <span class="o">=</span> <span class="n">Fixstern</span><span class="o">.</span><span class="n">rotation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rot_pl1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dreh</span><span class="o">*</span><span class="mf">0.02</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>                     <span class="c"># Rotation mit Achsen</span>
+        <span class="n">Fixstern</span><span class="o">.</span><span class="n">DrawGLScene_P</span><span class="p">(</span><span class="mf">1.2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rot_pl1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">quadratic_1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">light</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">)</span>       <span class="c"># Erstellen der Sonne</span>
+
+        <span class="c"># Erde aus Klasse Planeten</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rot_pl2</span> <span class="o">=</span> <span class="n">Planeten</span><span class="o">.</span><span class="n">rotation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rot_pl2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dreh</span><span class="o">*</span><span class="mf">0.04</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>                      <span class="c"># Rotation mit Achsen</span>
+        <span class="n">Planeten</span><span class="o">.</span><span class="n">DrawGLScene_P</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rot_pl2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">quadratic_2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">light</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">)</span>     <span class="c"># Erstellen des Planeten</span>
+
+         <span class="c"># Mond aus Klasse Mond</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rot_pl2</span> <span class="o">=</span> <span class="n">Mond</span><span class="o">.</span><span class="n">rotation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rot_pl2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dreh</span><span class="o">*</span><span class="mf">0.04</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>                          <span class="c"># Rotation mit Achsen</span>
+        <span class="n">Mond</span><span class="o">.</span><span class="n">DrawGLScene_P</span><span class="p">(</span><span class="mf">0.08</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rot_pl2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">quadratic_4</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">light</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">)</span>          <span class="c"># Erstellen des Mondes</span>
+
+        <span class="c"># Mars aus Klasse Planeten</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rot_pl3</span> <span class="o">=</span> <span class="n">Planeten</span><span class="o">.</span><span class="n">rotation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rot_pl3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dreh</span><span class="o">*</span><span class="mf">0.04</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>                     <span class="c"># Rotation mit Achsen</span>
+        <span class="n">Planeten</span><span class="o">.</span><span class="n">DrawGLScene_P</span><span class="p">(</span><span class="mf">0.15</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rot_pl3</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">quadratic_3</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">light</span><span class="p">,</span> <span class="mf">2.1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">)</span>   <span class="c"># Erstellen des Mondes</span>
+
+        <span class="n">glutSwapBuffers</span><span class="p">()</span>  <span class="c"># zeichnen</span>
+</div>
+<div class="viewcode-block" id="Screen.keyPressed"><a class="viewcode-back" href="../Sonnensystem.html#Sonnensystem.Screen.keyPressed">[Doku]</a>    <span class="k">def</span> <span class="nf">keyPressed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">key</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tastertur bedienen</span>
+<span class="sd">        :param key: Taste auf Tastatur</span>
+<span class="sd">        :param x: Koordinaten x</span>
+<span class="sd">        :param y: Koordinaten y</span>
+<span class="sd">        :return: aufruf der Methoden bei Klick einer Taste</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c"># Hilfe aufrufen</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="n">b</span><span class="s">&#39;h&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Menu</span><span class="p">()</span>
+
+
+        <span class="c"># Licht ein / aus</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="n">b</span><span class="s">&#39;l&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
+                <span class="n">glDisable</span><span class="p">(</span><span class="n">GL_LIGHTING</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="ow">is</span> <span class="bp">False</span><span class="p">:</span>
+                <span class="n">glEnable</span><span class="p">(</span><span class="n">GL_LIGHTING</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">=</span> <span class="bp">True</span>
+
+        <span class="c"># Textur ein / aus</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="n">b</span><span class="s">&#39;t&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
+                <span class="n">glDisable</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="ow">is</span> <span class="bp">False</span><span class="p">:</span>
+                <span class="n">glEnable</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">=</span> <span class="bp">True</span>
+
+        <span class="c"># Kameraposition</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="n">b</span><span class="s">&#39;c&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">c</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">c</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">c</span> <span class="ow">is</span> <span class="bp">False</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">c</span> <span class="o">=</span> <span class="bp">True</span>
+
+        <span class="c"># Einzoomen</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="n">b</span><span class="s">&#39;u&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">z</span> <span class="o">+</span> <span class="mf">0.5</span>
+            <span class="n">gluLookAt</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">z</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">z</span> <span class="o">&lt;=</span> <span class="mi">15</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="mi">15</span>
+
+        <span class="c"># Auszoomen</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="n">b</span><span class="s">&#39;z&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">z</span> <span class="o">-</span> <span class="mf">0.5</span>
+            <span class="n">gluLookAt</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">z</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">z</span> <span class="o">&gt;=</span> <span class="mi">90</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="mi">90</span>
+
+        <span class="c"># Steuerung - Rotieren nach Rechts</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="n">b</span><span class="s">&#39;a&#39;</span><span class="p">:</span>
+            <span class="n">Fixstern</span><span class="o">.</span><span class="n">rotation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rot_pl1</span><span class="p">,</span><span class="mf">6.6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">Planeten</span><span class="o">.</span><span class="n">rotation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rot_pl2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">4.40</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">Planeten</span><span class="o">.</span><span class="n">rotation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rot_pl3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">2.20</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">Planeten</span><span class="o">.</span><span class="n">rotation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rot_pl4</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">4.40</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dreh</span> <span class="o">+=</span> <span class="mf">0.1</span>
+
+        <span class="c"># Steuerung - Rotieren nach Links</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="n">b</span><span class="s">&#39;s&#39;</span><span class="p">:</span>
+            <span class="n">Planeten</span><span class="o">.</span><span class="n">rotation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rot_pl2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mf">4.40</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">Planeten</span><span class="o">.</span><span class="n">rotation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rot_pl3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.20</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">Planeten</span><span class="o">.</span><span class="n">rotation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rot_pl4</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">4.40</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dreh</span> <span class="o">-=</span> <span class="mf">0.1</span>
+
+        <span class="c"># Animation/Rotation stoppen</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="n">b</span><span class="s">&#39;p&#39;</span><span class="p">:</span>
+            <span class="n">Planeten</span><span class="o">.</span><span class="n">rotation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rot_pl2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dreh</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">Planeten</span><span class="o">.</span><span class="n">rotation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rot_pl3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dreh</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">Planeten</span><span class="o">.</span><span class="n">rotation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rot_pl4</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dreh</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dreh</span> <span class="o">=</span> <span class="mi">0</span>
+</div>
+<div class="viewcode-block" id="Screen.mouseClick"><a class="viewcode-back" href="../Sonnensystem.html#Sonnensystem.Screen.mouseClick">[Doku]</a>    <span class="k">def</span> <span class="nf">mouseClick</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">button</span><span class="p">,</span><span class="n">state</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Diese Function erkennt einen Mausklick am Bildschirm</span>
+<span class="sd">        :param button: welche Taste auf der Maus wurde geklickt</span>
+<span class="sd">        :param state: GLUT_DOWN</span>
+<span class="sd">        :param x: Koordinaten</span>
+<span class="sd">        :param y: Koordinaten</span>
+<span class="sd">        :return: Aktion beim Klicken einer Maustaste</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+         <span class="c"># Licht ein / aus</span>
+        <span class="k">if</span> <span class="n">button</span> <span class="o">==</span> <span class="n">GLUT_LEFT_BUTTON</span> <span class="ow">and</span> <span class="n">state</span> <span class="o">==</span> <span class="n">GLUT_DOWN</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
+                <span class="n">glDisable</span><span class="p">(</span><span class="n">GL_LIGHTING</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="ow">is</span> <span class="bp">False</span><span class="p">:</span>
+                <span class="n">glEnable</span><span class="p">(</span><span class="n">GL_LIGHTING</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">=</span> <span class="bp">True</span>
+
+        <span class="c"># Textur ein / aus</span>
+        <span class="k">if</span> <span class="n">button</span> <span class="o">==</span> <span class="n">GLUT_RIGHT_BUTTON</span> <span class="ow">and</span> <span class="n">state</span> <span class="o">==</span> <span class="n">GLUT_DOWN</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
+                <span class="n">glDisable</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="ow">is</span> <span class="bp">False</span><span class="p">:</span>
+                <span class="n">glEnable</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">=</span> <span class="bp">True</span>
+</div>
+<div class="viewcode-block" id="Screen.main"><a class="viewcode-back" href="../Sonnensystem.html#Sonnensystem.Screen.main">[Doku]</a>    <span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Main Methode - Hier werden die Functions aufgerufen</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c"># Text der in der Console ausgegeben wird - Hilfestellung</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">        &gt;&gt; TASTATUR:</span>
+<span class="s">        &#39;L&#39; - Licht ein/aus ODER LINKE MAUSTASTE</span>
+<span class="s">        &#39;T&#39; - Textur ein/aus ODER RECHTE MAUSTASTE</span>
+<span class="s">        &#39;A&#39; / &#39;S&#39; - zum Steuern</span>
+<span class="s">        &#39;C&#39; - Kameraansicht ändern</span>
+<span class="s">        &#39;P&#39; - Stoppen der Animation</span>
+<span class="s">        &#39;Z&#39; - Einzoomen</span>
+<span class="s">        &#39;U&#39; - Auszoomen</span>
+<span class="s">        &#39;H&#39; - Hilfe aufrufen</span><span class="se">\n</span><span class="s"></span>
+<span class="s">        &gt;&gt; MAUS:</span>
+<span class="s">        Linke Maustaste - Licht ein/aus</span>
+<span class="s">        Rechte Maustaste - Textur ein/aus</span>
+<span class="s">        &quot;&quot;&quot;</span>
+
+        <span class="k">print</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>                                             <span class="c"># Text/Anleitung ausgeben</span>
+        <span class="n">root</span> <span class="o">=</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+        <span class="n">sp</span> <span class="o">=</span> <span class="n">Splashscreen</span><span class="p">(</span><span class="n">root</span><span class="p">,</span><span class="s">&#39;./Bilder/splash.gif&#39;</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>         <span class="c"># Splashscreen aufrufen - gif</span>
+        <span class="n">sp</span><span class="o">.</span><span class="n">__enter__</span><span class="p">()</span>                                          <span class="c"># Splashscreen oeffnen</span>
+        <span class="n">sp</span><span class="o">.</span><span class="n">__exit__</span><span class="p">()</span>                                           <span class="c"># Splashscreen schliessen</span>
+        <span class="n">root</span><span class="o">.</span><span class="n">iconify</span><span class="p">()</span>                                          <span class="c"># kl. Fenster oeffnen</span>
+        <span class="n">root</span><span class="o">.</span><span class="n">deiconify</span><span class="p">()</span>                                        <span class="c"># kl. Fenster schliessen</span>
+        <span class="n">root</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+
+        <span class="n">glutInit</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+
+        <span class="n">glutInitDisplayMode</span><span class="p">(</span><span class="n">GLUT_RGBA</span> <span class="o">|</span> <span class="n">GLUT_DOUBLE</span> <span class="o">|</span> <span class="n">GLUT_DEPTH</span><span class="p">)</span>   <span class="c"># Select type of Display mode</span>
+        <span class="n">glutInitWindowSize</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">600</span><span class="p">)</span>                               <span class="c"># Fenstergr 1000 x 600</span>
+        <span class="n">glutInitWindowPosition</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>                              <span class="c"># the window starts at the upper left corner of the screen</span>
+        <span class="n">glutCreateWindow</span><span class="p">(</span><span class="n">b</span><span class="s">&#39;Sonnensystem - Adamski &amp; Weiss&#39;</span><span class="p">)</span>         <span class="c"># Titel</span>
+        <span class="n">glutDisplayFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DrawGLScene</span><span class="p">)</span>                           <span class="c"># Register the drawing function with glut</span>
+        <span class="n">glutMouseFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mouseClick</span><span class="p">)</span>
+        <span class="n">glutIdleFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DrawGLScene</span><span class="p">)</span>                              <span class="c"># scene nochmal zeichnen</span>
+        <span class="n">glutReshapeFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ReSizeGLScene</span><span class="p">)</span>                         <span class="c"># fenstergroesse aendern</span>
+        <span class="n">glutKeyboardFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">keyPressed</span><span class="p">)</span>			                <span class="c"># Tastertur verwenden</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">InitGL</span><span class="p">(</span><span class="mi">640</span><span class="p">,</span> <span class="mi">480</span><span class="p">)</span>                                       <span class="c"># fenster initialisieren</span>
+        <span class="n">glutMainLoop</span><span class="p">()</span>                                              <span class="c"># Event starten</span>
+
+<span class="c"># Main Klasse aufrufen</span></div></div>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">Screen</span><span class="p">()</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Schnellsuche</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Los" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Geben Sie Suchbegriffe oder einen Modul-, Klassen- oder Funktionsnamen ein.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, janet.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.2</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
